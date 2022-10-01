@@ -5,8 +5,8 @@ namespace ScreensaverEngine
     {
         internal static void Main()
         {
-            using var game = new Engine();
-            game.Run();
+            using var engine = new Engine();
+            engine.Run();
         }
     }
 }
