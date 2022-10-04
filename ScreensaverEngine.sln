@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScreensaverEngine", "ScreensaverEngine\ScreensaverEngine.csproj", "{82D482D4-B96C-47A1-AC9A-18CC5D53B8E7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreensaverEngine.FlyingToasters", "ScreensaverEngine.FlyingToasters\ScreensaverEngine.FlyingToasters.csproj", "{17399C7B-FDB7-4C6E-A3EF-F7BD8222A0F9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{82D482D4-B96C-47A1-AC9A-18CC5D53B8E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82D482D4-B96C-47A1-AC9A-18CC5D53B8E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82D482D4-B96C-47A1-AC9A-18CC5D53B8E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17399C7B-FDB7-4C6E-A3EF-F7BD8222A0F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17399C7B-FDB7-4C6E-A3EF-F7BD8222A0F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17399C7B-FDB7-4C6E-A3EF-F7BD8222A0F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17399C7B-FDB7-4C6E-A3EF-F7BD8222A0F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

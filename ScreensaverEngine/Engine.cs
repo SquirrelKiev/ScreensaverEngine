@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.IO;
 using System.Reflection;
 
 namespace ScreensaverEngine
@@ -47,9 +48,9 @@ namespace ScreensaverEngine
             Graphics.IsFullScreen = true;
 #endif
             // TODO: Dynamically load assembly
-            var assembly = Assembly.GetExecutingAssembly();
+            var assembly = ReflectionUtility.LoadAssembliesInDirectory(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Screensavers"));
 
-            components = ReflectionUtility.GetInstancedTypesFromAssembly<Component>(assembly, true);
+            components = ReflectionUtility.GetInstancedTypesFromAssembly<Component>(assembly[0], true);
         }
 
         protected override void Initialize()

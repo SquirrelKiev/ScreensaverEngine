@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Content\explosion.png" />
+    <None Remove="Content\snd_badexplosion.wav" />
+    <None Remove="Content\toastburnt.gif" />
+    <None Remove="Content\toaster.png" />
+    <None Remove="Content\toastlight.gif" />
+    <None Remove="Content\toastverywell.gif" />
+    <None Remove="Content\toastwell.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Content\explosion.png" />
+    <EmbeddedResource Include="Content\snd_badexplosion.wav" />
+    <EmbeddedResource Include="Content\toastburnt.gif" />
+    <EmbeddedResource Include="Content\toaster.png" />
+    <EmbeddedResource Include="Content\toastlight.gif" />
+    <EmbeddedResource Include="Content\toastverywell.gif" />
+    <EmbeddedResource Include="Content\toastwell.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.1.303" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ScreensaverEngine\ScreensaverEngine.csproj">
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="robocopy bin/Debug/net6.0 ../ScreensaverEngine/bin/Debug/net6.0/Screensavers&#xD;&#xA;if %25errorlevel%25 leq 1 exit 0 else exit %25errorlevel%25" />
+  </Target>
+
+</Project>

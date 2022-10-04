@@ -44,6 +44,19 @@ namespace ScreensaverEngine
             return instances.ToArray();
         }
 
+        internal static Assembly[] LoadAssembliesInDirectory(string directory)
+        {
+            var assemblyPaths = Directory.GetFiles(directory, "*.dll");
+
+            var assemblies = new Assembly[assemblyPaths.Length];
+
+            for (int i = 0; i < assemblyPaths.Length; i++)
+            {
+                assemblies[i] = Assembly.LoadFile(assemblyPaths[i]);
+            }
+
+            return assemblies;
+        }
 
         ///// <summary>
         ///// Gets all methods within the specified assembly with the specified attribute. 
