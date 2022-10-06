@@ -3,43 +3,44 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace ScreensaverEngine
 {
     public class Engine : Game
     {
         #region Variables
-        public static Engine Instance { get; private set; }
+        public Config config { get; private set; }
 
-        public static GameTime GameTime { get; private set; }
+        public GameTime GameTime { get; private set; }
 
-        public static GraphicsDeviceManager Graphics { get; private set; }
-        public static Matrix ScreenMatrix { get; private set; }
-        public static Viewport Viewport { get; private set; }
+        public GraphicsDeviceManager Graphics { get; private set; }
+        public Matrix ScreenMatrix { get; private set; }
+        public Viewport Viewport { get; private set; }
 
-        public static int BaseWidth { get; private set; } = 1280;
-        public static int BaseHeight { get; private set; } = 720;
-        public static int ViewWidth { get; private set; }
-        public static int ViewHeight { get; private set; }
+        public int BaseWidth { get; private set; } = 1280;
+        public int BaseHeight { get; private set; } = 720;
+        public int ViewWidth { get; private set; }
+        public int ViewHeight { get; private set; }
 
-        public static Color BackgroundColor { get; set; } = Color.Black;
+        public Color BackgroundColor { get; set; } = Color.Black;
         
-        public static SpriteBatch SpriteBatch { get; private set; }
+        public SpriteBatch SpriteBatch { get; private set; }
 
-        private static Component[] components;
+        private Component[] components;
 
-        public static Texture2D Rectangle { get; private set; }
-        #endregion
+        public Texture2D Rectangle { get; private set; }
+        #endregion Variables
 
         public Engine()
         {
-            Instance = this;
+            config = new Config();
 
             Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
-#if !DEBUG
+#if DEBUG
             Graphics.PreferredBackBufferWidth = 1280;
             Graphics.PreferredBackBufferHeight = 720;
 #else
@@ -47,10 +48,29 @@ namespace ScreensaverEngine
             Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             Graphics.IsFullScreen = true;
 #endif
-            // TODO: Dynamically load assembly
-            var assembly = ReflectionUtility.LoadAssembliesInDirectory(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Screensavers"));
+            var assemblies = ReflectionUtility.LoadAssembliesInDirectory(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Screensavers"));
 
-            components = ReflectionUtility.GetInstancedTypesFromAssembly<Component>(assembly[0], true);
+            foreach(var assembly in assemblies)
+            {
+                Debug.Log(assembly.FullName);
+
+                if (assembly.FullName == config.assemblyToLoad)
+                {
+                    components = ReflectionUtility.GetInstancedTypesFromAssembly<Component>(assembly, true);
+                    foreach(var component in components)
+                    {
+                        component.Engine = this;
+                    }
+
+                    break;
+                }
+            }
+
+            if(components == null)
+            {
+                Debug.LogError("No screensaver set to use in config!");
+                Environment.Exit(1);
+            }
         }
 
         protected override void Initialize()

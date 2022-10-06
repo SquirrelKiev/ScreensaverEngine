@@ -16,13 +16,13 @@ namespace ScreensaverEngine
 
         public static void LogError(object info)
         {
-            InternalLog("[ERROR]", ConsoleColor.DarkRed, info);
+            InternalLog("[ERROR]", ConsoleColor.Red, info);
         }
 
         private static void InternalLog(string prefix, ConsoleColor textColor, object info)
         {
 #if DEBUG
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = textColor;
             Console.WriteLine($"{prefix} {info}");
             Console.ForegroundColor = ConsoleColor.White;
 #endif

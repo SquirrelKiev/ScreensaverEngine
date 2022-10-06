@@ -1,10 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ScreensaverEngine
 {
@@ -14,6 +9,8 @@ namespace ScreensaverEngine
     /// </summary>
     public abstract class Component
     {
+        public Engine Engine { get; internal set; }
+
         public virtual void Initialize() { }
         public virtual void LoadContent(GraphicsDevice graphicsDevice) { }
         public virtual void OnShutdown() { }
