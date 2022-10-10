@@ -31,7 +31,7 @@ namespace ScreensaverEngine
         public Texture2D Rectangle { get; private set; }
         #endregion Variables
 
-        public Engine()
+        internal Engine()
         {
             config = new Config();
 
@@ -53,7 +53,7 @@ namespace ScreensaverEngine
             {
                 Debug.Log(assembly.FullName);
 
-                if (assembly.FullName == config.assemblyToLoad)
+                if (assembly.FullName == config.AssemblyToLoad)
                 {
                     components = ReflectionUtility.GetInstancedTypesFromAssembly<Component>(assembly, true);
                     foreach(var component in components)
@@ -119,7 +119,7 @@ namespace ScreensaverEngine
 
             GraphicsDevice.Clear(BackgroundColor);
 
-            SpriteBatch.Begin(transformMatrix: ScreenMatrix);
+            SpriteBatch.Begin(transformMatrix: ScreenMatrix, samplerState: SamplerState.PointClamp);
             {
                 foreach (var component in components) component.Draw(SpriteBatch);
             }

@@ -1,10 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>disable</ImplicitUsings>
-    <Nullable>disable</Nullable>
-    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+	  <OutputPath>$(SolutionDir)\bin\$(Configuration)\Screensavers</OutputPath>
+	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,10 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ApplicationDefinition Include="Content\CREDITS.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
     <EmbeddedResource Include="Content\explosion.png" />
     <EmbeddedResource Include="Content\snd_badexplosion.wav" />
     <EmbeddedResource Include="Content\toastburnt.gif" />
@@ -33,17 +29,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.1.303" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ScreensaverEngine\ScreensaverEngine.csproj">
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="robocopy bin/Debug/net6.0 ../ScreensaverEngine/bin/Debug/net6.0/Screensavers&#xD;&#xA;if %25errorlevel%25 leq 1 exit 0 else exit %25errorlevel%25" />
-  </Target>
 
 </Project>

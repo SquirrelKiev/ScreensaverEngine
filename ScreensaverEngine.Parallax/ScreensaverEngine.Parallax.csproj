@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
 	<ImplicitUsings>disable</ImplicitUsings>
+	<OutputPath>$(SolutionDir)\bin\$(Configuration)\Screensavers</OutputPath>
+	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,11 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ScreensaverEngine\ScreensaverEngine.csproj" />
+    <ProjectReference Include="..\ScreensaverEngine\ScreensaverEngine.csproj">
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="robocopy bin/Debug/net6.0 ../ScreensaverEngine/bin/Debug/net6.0/Screensavers&#xD;&#xA;if %25errorlevel%25 leq 1 exit 0 else exit %25errorlevel%25" />
-  </Target>
 
 </Project>
