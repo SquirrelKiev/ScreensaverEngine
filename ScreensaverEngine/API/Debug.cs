@@ -22,6 +22,8 @@ namespace ScreensaverEngine
         private static void InternalLog(string prefix, ConsoleColor textColor, object info)
         {
 #if DEBUG
+            if (info == null) info = "null";
+
             Console.ForegroundColor = textColor;
             Console.WriteLine($"{prefix} {info}");
             Console.ForegroundColor = ConsoleColor.White;

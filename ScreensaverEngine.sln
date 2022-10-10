@@ -5,7 +5,9 @@ VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScreensaverEngine", "ScreensaverEngine\ScreensaverEngine.csproj", "{82D482D4-B96C-47A1-AC9A-18CC5D53B8E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreensaverEngine.FlyingToasters", "ScreensaverEngine.FlyingToasters\ScreensaverEngine.FlyingToasters.csproj", "{17399C7B-FDB7-4C6E-A3EF-F7BD8222A0F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScreensaverEngine.FlyingToasters", "ScreensaverEngine.FlyingToasters\ScreensaverEngine.FlyingToasters.csproj", "{17399C7B-FDB7-4C6E-A3EF-F7BD8222A0F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreensaverEngine.Parallax", "ScreensaverEngine.Parallax\ScreensaverEngine.Parallax.csproj", "{903FDC46-6CAD-4C4D-965B-27C81C2CFF59}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{17399C7B-FDB7-4C6E-A3EF-F7BD8222A0F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17399C7B-FDB7-4C6E-A3EF-F7BD8222A0F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17399C7B-FDB7-4C6E-A3EF-F7BD8222A0F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{903FDC46-6CAD-4C4D-965B-27C81C2CFF59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{903FDC46-6CAD-4C4D-965B-27C81C2CFF59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{903FDC46-6CAD-4C4D-965B-27C81C2CFF59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{903FDC46-6CAD-4C4D-965B-27C81C2CFF59}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

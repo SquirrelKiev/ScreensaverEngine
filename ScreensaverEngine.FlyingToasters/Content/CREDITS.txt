@@ -1,0 +1,2 @@
+﻿© 1989 Berkeley Systems Inc. - Toaster and Toast sprites (taken from https://github.com/bryanbraun/after-dark-css)
+DELTARUNE - Explosion sprite and sfx

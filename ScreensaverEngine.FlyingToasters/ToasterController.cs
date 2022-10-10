@@ -33,20 +33,20 @@ namespace ScreensaverEngine.FlyingToasters
 
         public override void LoadContent(GraphicsDevice graphicsDevice)
         {
-            explosionTexture = Texture2D.FromStream(graphicsDevice, currentAssembly.GetManifestResourceStream($"{contentDir}.explosion.png"));
+            explosionTexture = currentAssembly.LoadTexture2DFromManifest(graphicsDevice, "explosion.png");
 
             explosionSound = SoundEffect.FromStream(currentAssembly.GetManifestResourceStream($"{contentDir}.snd_badexplosion.wav"));
 
             toasterTextures[Toaster.ToastType.Toaster] = new Texture2D[]
             {
-                Texture2D.FromStream(graphicsDevice, currentAssembly.GetManifestResourceStream($"{contentDir}.toaster.png"))
+                currentAssembly.LoadTexture2DFromManifest(graphicsDevice, "toaster.png")
             };
             toasterTextures[Toaster.ToastType.Toast] = new Texture2D[]
             {
-                Texture2D.FromStream(graphicsDevice, currentAssembly.GetManifestResourceStream($"{contentDir}.toastlight.gif")),
-                Texture2D.FromStream(graphicsDevice, currentAssembly.GetManifestResourceStream($"{contentDir}.toastwell.gif")),
-                Texture2D.FromStream(graphicsDevice, currentAssembly.GetManifestResourceStream($"{contentDir}.toastverywell.gif")),
-                Texture2D.FromStream(graphicsDevice, currentAssembly.GetManifestResourceStream($"{contentDir}.toastburnt.gif"))
+                currentAssembly.LoadTexture2DFromManifest(graphicsDevice, "toastlight.gif"),
+                currentAssembly.LoadTexture2DFromManifest(graphicsDevice, "toastwell.gif"),
+                currentAssembly.LoadTexture2DFromManifest(graphicsDevice, "toastverywell.gif"),
+                currentAssembly.LoadTexture2DFromManifest(graphicsDevice, "toastburnt.gif")
             };
         }
 

@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Content\CREDITS.txt" />
     <None Remove="Content\explosion.png" />
     <None Remove="Content\snd_badexplosion.wav" />
     <None Remove="Content\toastburnt.gif" />
@@ -15,6 +16,10 @@
     <None Remove="Content\toastlight.gif" />
     <None Remove="Content\toastverywell.gif" />
     <None Remove="Content\toastwell.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ApplicationDefinition Include="Content\CREDITS.txt" />
   </ItemGroup>
 
   <ItemGroup>
