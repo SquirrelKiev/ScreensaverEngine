@@ -9,6 +9,14 @@
 
   <ItemGroup>
     <None Remove="Content\CREDITS.txt" />
+    <None Remove="Content\Mountains\bg.png" />
+    <None Remove="Content\Mountains\clouds.png" />
+    <None Remove="Content\Mountains\license.txt" />
+    <None Remove="Content\Mountains\moon.png" />
+    <None Remove="Content\Mountains\mountain-far.png" />
+    <None Remove="Content\Mountains\mountain.png" />
+    <None Remove="Content\Mountains\trees-far.png" />
+    <None Remove="Content\Mountains\trees.png" />
     <None Remove="Content\parallax-mountain-bg.png" />
     <None Remove="Content\parallax-mountain-foreground-trees.png" />
     <None Remove="Content\parallax-mountain-montain-far.png" />
@@ -17,12 +25,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Content\CREDITS.txt" />
-    <EmbeddedResource Include="Content\parallax-mountain-bg.png" />
-    <EmbeddedResource Include="Content\parallax-mountain-foreground-trees.png" />
-    <EmbeddedResource Include="Content\parallax-mountain-montain-far.png" />
-    <EmbeddedResource Include="Content\parallax-mountain-mountains.png" />
-    <EmbeddedResource Include="Content\parallax-mountain-trees.png" />
+    <EmbeddedResource Include="Content\Mountains\bg.png" />
+    <EmbeddedResource Include="Content\Mountains\clouds.png" />
+    <EmbeddedResource Include="Content\Mountains\license.txt" />
+    <EmbeddedResource Include="Content\Mountains\moon.png" />
+    <EmbeddedResource Include="Content\Mountains\mountain-far.png" />
+    <EmbeddedResource Include="Content\Mountains\mountain.png" />
+    <EmbeddedResource Include="Content\Mountains\trees-far.png" />
+    <EmbeddedResource Include="Content\Mountains\trees.png" />
   </ItemGroup>
 
   <ItemGroup>

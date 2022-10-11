@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using System.IO;
 using System.Reflection;
 
 namespace ScreensaverEngine
@@ -14,7 +15,14 @@ namespace ScreensaverEngine
         {
             string contentDir = $"{currentAssembly.GetName().Name}.Content";
 
-            return Texture2D.FromStream(graphicsDevice, currentAssembly.GetManifestResourceStream($"{contentDir}.{fileName}"));
+            using var stream = currentAssembly.GetManifestResourceStream($"{contentDir}.{fileName}");
+
+            if (stream == null)
+            {
+                throw new FileNotFoundException($"File {fileName} is missing!");
+            }
+
+            return Texture2D.FromStream(graphicsDevice, stream);
         }
     }
 }

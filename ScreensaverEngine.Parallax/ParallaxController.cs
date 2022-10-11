@@ -57,7 +57,7 @@ namespace ScreensaverEngine.Parallax
                 layer.currentPosition.X += layer.Layer.speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 if (!bounding.Intersects(layer.BoundingBox))
                 {
-                    layer.currentPosition.X = layer.Layer.speed < 0 ? layer.Scale.X - 1 : 1 - layer.Scale.X;
+                    layer.currentPosition.X = layer.Layer.speed < 1 - layer.Scale.X ? layer.Scale.X - 1 : 1 - layer.Scale.X;
                 }
             }
         }
