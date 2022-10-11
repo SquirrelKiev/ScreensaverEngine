@@ -51,8 +51,6 @@ namespace ScreensaverEngine
 
             foreach(var assembly in assemblies)
             {
-                Debug.Log(assembly.FullName);
-
                 if (assembly.FullName == config.AssemblyToLoad)
                 {
                     components = ReflectionUtility.GetInstancedTypesFromAssembly<Component>(assembly, true);
@@ -128,6 +126,7 @@ namespace ScreensaverEngine
             foreach (var component in components) component.PostDraw();
         }
 
+        // thank you monocle engine very cool
         private void UpdateView()
         {
             float screenWidth = GraphicsDevice.PresentationParameters.BackBufferWidth;
