@@ -3,13 +3,14 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
 using System.Reflection;
+using ScreensaverEngine.Config;
 
 namespace ScreensaverEngine
 {
     public class Engine : Game
     {
         #region Variables
-        public Config config { get; private set; }
+        public EngineConfig config { get; private set; }
 
         public GameTime GameTime { get; private set; }
 
@@ -22,8 +23,17 @@ namespace ScreensaverEngine
         public int ViewWidth { get; private set; }
         public int ViewHeight { get; private set; }
 
+        public bool PreviewMode
+        {
+            get
+            {
+                return previewWndHandle.HasValue;
+            }
+        }
+        private IntPtr? previewWndHandle;
+
         public Color BackgroundColor { get; set; } = Color.Black;
-        
+
         public SpriteBatch SpriteBatch { get; private set; }
 
         private Component[] components;
@@ -31,47 +41,57 @@ namespace ScreensaverEngine
         public Texture2D Rectangle { get; private set; }
         #endregion Variables
 
-        internal Engine()
+        internal Engine(Assembly assembly, EngineConfig config, IntPtr? previewWndHandle = null)
         {
-            config = new Config();
+            this.previewWndHandle = previewWndHandle;
 
             Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
 
-#if DEBUG
-            Graphics.PreferredBackBufferWidth = 1280;
-            Graphics.PreferredBackBufferHeight = 720;
-#else
-            Graphics.PreferredBackBufferWidth  = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-            Graphics.IsFullScreen = true;
-#endif
-            var assemblies = ReflectionUtility.LoadAssembliesInDirectory(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Screensavers"));
-
-            foreach(var assembly in assemblies)
+            components = ReflectionUtility.GetInstancedTypesFromAssembly<Component>(assembly, true);
+            foreach (var component in components)
             {
-                if (assembly.FullName == config.AssemblyToLoad)
-                {
-                    components = ReflectionUtility.GetInstancedTypesFromAssembly<Component>(assembly, true);
-                    foreach(var component in components)
-                    {
-                        component.Engine = this;
-                    }
-
-                    break;
-                }
-            }
-
-            if(components == null)
-            {
-                Debug.LogError("No screensaver set to use in config!");
-                Environment.Exit(1);
+                component.Engine = this;
             }
         }
 
         protected override void Initialize()
         {
+            if (PreviewMode)
+            {
+                System.Windows.Forms.Form form = (System.Windows.Forms.Form)System.Windows.Forms.Control.FromHandle(Window.Handle);
+
+                form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+
+                // Place our window inside the parent
+                System.Drawing.Rectangle parentRect;
+                NativeMethods.GetClientRect(previewWndHandle.Value, out parentRect);
+
+                Graphics.PreferredBackBufferWidth = parentRect.Size.Width;
+                Graphics.PreferredBackBufferWidth = parentRect.Size.Height;
+
+                Graphics.ApplyChanges();
+
+                // Set the preview window as the parent of this window
+                NativeMethods.SetParent(Window.Handle, previewWndHandle.Value);
+
+                // Make this a child window so it will close when the parent dialog closes
+                NativeMethods.SetWindowLong(Window.Handle, -16, new IntPtr(NativeMethods.GetWindowLong(Window.Handle, -16) | 0x40000000));
+                NativeMethods.MoveWindow(Window.Handle, parentRect.Left, parentRect.Top, parentRect.Right, parentRect.Bottom, false);
+            }
+            else
+            {
+#if DEBUG
+                Graphics.PreferredBackBufferWidth = 1280;
+                Graphics.PreferredBackBufferHeight = 720;
+#else
+                Graphics.PreferredBackBufferWidth  = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+                Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+                Graphics.IsFullScreen = true;
+                IsMouseVisible = false;
+#endif
+            }
+
             UpdateView();
 
             Debug.Log($"Base Width: {BaseWidth}, Base Height: {BaseHeight}");
