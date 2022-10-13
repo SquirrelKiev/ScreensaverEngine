@@ -5,18 +5,13 @@ namespace ScreensaverEngine.Config
 {
     public partial class ConfigForm : Form
     {
-        DisplayableAssemblyWrapper[] assemblies;
+        Assembly[] assemblies;
 
-        public ConfigForm(Assembly[] assemblies, Config.EngineConfig config)
+        public ConfigForm(Assembly[] assemblies, EngineConfig config)
         {
             InitializeComponent();
 
-            this.assemblies = new DisplayableAssemblyWrapper[assemblies.Length];
-
-            for (int i = 0; i < assemblies.Length; i++)
-            {
-                this.assemblies[i] = new DisplayableAssemblyWrapper(assemblies[i]);
-            }
+            this.assemblies = assemblies;
 
             ScreensaverList.BeginUpdate();
             {
@@ -28,13 +23,18 @@ namespace ScreensaverEngine.Config
 
         private void OkButton_Click(object sender, System.EventArgs e)
         {
-            SaveConfig();
+            SaveEngineConfig();
             Close();
         }
 
-        private void SaveConfig()
+        private void SaveEngineConfig()
         {
             // TODO
+        }
+
+        private void ConfigButton_Click(object sender, System.EventArgs e)
+        {
+
         }
     }
 }

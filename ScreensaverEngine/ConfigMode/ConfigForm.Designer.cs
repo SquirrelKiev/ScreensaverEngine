@@ -1,4 +1,6 @@
-﻿namespace ScreensaverEngine.Config
+﻿using System.Reflection;
+
+namespace ScreensaverEngine.Config
 {
     partial class ConfigForm
     {
@@ -28,7 +30,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfigForm));
             this.ScreensaverList = new System.Windows.Forms.ListBox();
             this.OkButton = new System.Windows.Forms.Button();
             this.ConfigButton = new System.Windows.Forms.Button();
@@ -42,13 +43,13 @@
             this.ScreensaverList.ItemHeight = 15;
             this.ScreensaverList.Location = new System.Drawing.Point(12, 12);
             this.ScreensaverList.Name = "ScreensaverList";
-            this.ScreensaverList.Size = new System.Drawing.Size(210, 154);
+            this.ScreensaverList.Size = new System.Drawing.Size(235, 154);
             this.ScreensaverList.TabIndex = 0;
             // 
             // OkButton
             // 
             this.OkButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.OkButton.Location = new System.Drawing.Point(147, 201);
+            this.OkButton.Location = new System.Drawing.Point(172, 226);
             this.OkButton.Name = "OkButton";
             this.OkButton.Size = new System.Drawing.Size(75, 23);
             this.OkButton.TabIndex = 1;
@@ -59,22 +60,23 @@
             // ConfigButton
             // 
             this.ConfigButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ConfigButton.Location = new System.Drawing.Point(12, 201);
+            this.ConfigButton.Location = new System.Drawing.Point(12, 226);
             this.ConfigButton.Name = "ConfigButton";
             this.ConfigButton.Size = new System.Drawing.Size(125, 23);
             this.ConfigButton.TabIndex = 2;
             this.ConfigButton.Text = "Module Config";
             this.ConfigButton.UseVisualStyleBackColor = true;
+            this.ConfigButton.Click += new System.EventHandler(this.ConfigButton_Click);
             // 
             // ConfigForm
             // 
+            this.AcceptButton = this.OkButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(234, 236);
+            this.ClientSize = new System.Drawing.Size(259, 261);
             this.Controls.Add(this.ConfigButton);
             this.Controls.Add(this.OkButton);
             this.Controls.Add(this.ScreensaverList);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ConfigForm";

@@ -5,6 +5,7 @@
     <ImplicitUsings>disable</ImplicitUsings>
 	  <OutputPath>$(SolutionDir)\bin\$(Configuration)\Screensavers</OutputPath>
 	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+	  <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
   <ItemGroup>
