@@ -1,7 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using System;
 using System.Drawing;
-using System.Text;
 
 namespace ScreensaverEngine
 {
@@ -24,7 +23,7 @@ namespace ScreensaverEngine
 
         [DllImport("user32.dll")]
         internal static extern IntPtr GetParent(IntPtr hWnd);
-    }
+    } 
 
     internal class WindowWrapper : System.Windows.Forms.IWin32Window
     {

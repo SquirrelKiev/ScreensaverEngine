@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Config Mode": {
+      "commandName": "Project"
+    },
+    "Screensaver Mode": {
+      "commandName": "Project",
+      "commandLineArgs": "/s",
+      "authenticationMode": "None"
+    }
+  }
+}
