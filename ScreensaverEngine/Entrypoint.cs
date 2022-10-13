@@ -13,7 +13,7 @@ namespace ScreensaverEngine
         // https://web.archive.org/web/20101022220937/http://doktormadsen.dk/wp/xna-screensaver-kit/
         internal static int Main(string[] args)
         {
-            var config = EngineConfig.LoadConfig();
+            var config = ConfigUtility.LoadConfig<EngineConfig>();
             var assemblies = ReflectionUtility.LoadAssembliesInDirectory(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Screensavers"));
             var userSelectedAssembly = assemblies.FirstOrDefault(assembly => { return assembly.FullName == config.AssemblyToLoad; });
             

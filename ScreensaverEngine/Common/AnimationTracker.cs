@@ -32,8 +32,16 @@ namespace ScreensaverEngine
             position = startingPosition;
         }
 
+        public void Reset()
+        {
+            frame = 0;
+            animationCompleted = false;
+        }
+
         public void Update(GameTime gameTime)
         {
+            if (animationCompleted) return;
+
             if (lastFrameRendered + timeBetweenFrames <= gameTime.TotalGameTime.TotalSeconds)
             {
                 frame++;
@@ -54,8 +62,6 @@ namespace ScreensaverEngine
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            //Raylib.DrawText($"{frame}", 20, 20, 36, Color.GREEN);position
-
             spriteBatch.Draw(spritesheet,
                 new Rectangle((int)position.X, (int)position.Y, (int)frameWidth, spritesheet.Height),
                 new Rectangle((int)frameWidth * frame, 0, (int)frameWidth, spritesheet.Height),

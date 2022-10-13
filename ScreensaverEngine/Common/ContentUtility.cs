@@ -13,9 +13,7 @@ namespace ScreensaverEngine
         /// <returns></returns>
         public static Texture2D LoadTexture2DFromManifest(Assembly currentAssembly, GraphicsDevice graphicsDevice, string fileName)
         {
-            string contentDir = $"{currentAssembly.GetName().Name}.Content";
-
-            using var stream = currentAssembly.GetManifestResourceStream($"{contentDir}.{fileName}");
+            using var stream = currentAssembly.GetManifestResourceStream($"{GetManifestContentDirectory(currentAssembly)}.{fileName}");
 
             if (stream == null)
             {
@@ -23,6 +21,11 @@ namespace ScreensaverEngine
             }
 
             return Texture2D.FromStream(graphicsDevice, stream);
+        }
+
+        public static string GetManifestContentDirectory(Assembly currentAssembly)
+        {
+            return $"{currentAssembly.GetName().Name}.Content";
         }
     }
 }

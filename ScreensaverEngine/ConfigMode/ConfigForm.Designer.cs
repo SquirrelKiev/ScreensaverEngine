@@ -77,6 +77,7 @@ namespace ScreensaverEngine.Config
             this.Controls.Add(this.ConfigButton);
             this.Controls.Add(this.OkButton);
             this.Controls.Add(this.ScreensaverList);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ConfigForm";

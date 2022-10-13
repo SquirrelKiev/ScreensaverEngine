@@ -59,7 +59,7 @@ namespace ScreensaverEngine.Config
 
             config.AssemblyToLoad = assemblyName;
 
-            config.SaveConfig();
+            ConfigUtility.SaveConfig(config);
         }
     }
 }
