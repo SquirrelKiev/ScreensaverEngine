@@ -32,10 +32,7 @@ namespace ScreensaverEngine
             this.handle = handle;
         }
 
-        public IntPtr Handle
-        {
-            get { return handle; }
-        }
+        public IntPtr Handle => handle;
 
         private readonly IntPtr handle;
     }

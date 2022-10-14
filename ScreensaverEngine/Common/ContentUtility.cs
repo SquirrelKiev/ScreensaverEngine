@@ -8,7 +8,7 @@ namespace ScreensaverEngine
     {
         /// <summary>
         /// Loads a Texture2D from the Content directory embedded within the specified assembly. 
-        /// This assumes the content directory is "{<see cref="Assembly.GetName().Name"/>}.Content". 
+        /// This assumes the content directory is "AssemblyFriendlyName.Content". 
         /// </summary>
         /// <returns></returns>
         public static Texture2D LoadTexture2DFromManifest(Assembly currentAssembly, GraphicsDevice graphicsDevice, string fileName)

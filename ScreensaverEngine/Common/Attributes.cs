@@ -7,9 +7,9 @@ namespace ScreensaverEngine
     [AttributeUsage(AttributeTargets.Assembly)]
     public class ModuleInfoAttribute : Attribute 
     {
-        public string ModuleName { get; private set; }
-        public string ModuleAuthor { get; private set; }
-        public Type ConfigForm { get; private set; }
+        public string ModuleName { get; }
+        public string ModuleAuthor { get; }
+        public Type ConfigForm { get; }
 
         public ModuleInfoAttribute(string moduleName, string moduleAuthor, Type configForm = null)
         {

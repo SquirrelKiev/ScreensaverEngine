@@ -4,7 +4,7 @@ namespace ScreensaverEngine
 {
     internal class DisplayableAssembly
     {
-        internal Assembly Assembly { get; private set; }
+        internal Assembly Assembly { get; }
 
         internal DisplayableAssembly(Assembly assembly)
         {
@@ -14,7 +14,7 @@ namespace ScreensaverEngine
         public override string ToString()
         {
             var attribute = Assembly.GetCustomAttribute<ModuleInfoAttribute>();
-            return $"{attribute.ModuleName} by {attribute.ModuleAuthor}";
+            return attribute != null ? $"{attribute.ModuleName} by {attribute.ModuleAuthor}" : $"{Assembly.GetName().Name}";
         }
     }
 }

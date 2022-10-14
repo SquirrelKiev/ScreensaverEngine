@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Reflection;
-using ScreensaverEngine.Config;
 
 namespace ScreensaverEngine
 {
@@ -22,13 +21,7 @@ namespace ScreensaverEngine
         public int ViewWidth { get; private set; }
         public int ViewHeight { get; private set; }
 
-        public bool PreviewMode
-        {
-            get
-            {
-                return previewWndHandle.HasValue;
-            }
-        }
+        public bool PreviewMode => previewWndHandle.HasValue;
         private readonly IntPtr? previewWndHandle;
 
         public Color BackgroundColor { get; set; } = Color.Black;
@@ -57,13 +50,13 @@ namespace ScreensaverEngine
 
         protected override void Initialize()
         {
-            if (PreviewMode)
+            if (previewWndHandle.HasValue)
             {
-                System.Windows.Forms.Form form = (System.Windows.Forms.Form)System.Windows.Forms.Control.FromHandle(Window.Handle);
+                var form = (System.Windows.Forms.Form)System.Windows.Forms.Control.FromHandle(Window.Handle);
 
                 form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 
-                NativeMethods.GetClientRect(previewWndHandle.Value, out System.Drawing.Rectangle parentRect);
+                NativeMethods.GetClientRect(previewWndHandle.Value, out var parentRect);
 
                 Graphics.PreferredBackBufferWidth = parentRect.Size.Width;
                 Graphics.PreferredBackBufferWidth = parentRect.Size.Height;
@@ -113,7 +106,7 @@ namespace ScreensaverEngine
             SpriteBatch = new SpriteBatch(GraphicsDevice);
 
             Rectangle = new Texture2D(GraphicsDevice, 1, 1);
-            Rectangle.SetData(new Color[] { Color.White });
+            Rectangle.SetData(new[] { Color.White });
 
             foreach (var component in components) component.LoadContent(GraphicsDevice);
         }
@@ -175,8 +168,8 @@ namespace ScreensaverEngine
             // update viewport
             Viewport = new Viewport
             {
-                X = (int)(screenWidth / 2 - ViewWidth / 2),
-                Y = (int)(screenHeight / 2 - ViewHeight / 2),
+                X = (int)(screenWidth / 2f - ViewWidth / 2f),
+                Y = (int)(screenHeight / 2f - ViewHeight / 2f),
                 Width = ViewWidth,
                 Height = ViewHeight,
                 MinDepth = 0,

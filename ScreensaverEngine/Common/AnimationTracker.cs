@@ -5,29 +5,23 @@ namespace ScreensaverEngine
 {
     public class AnimationTracker
     {
-        public Vector2 position = Vector2.Zero;
-        public Texture2D spritesheet { get; private set; }
-        public bool loop { get; private set; } = false;
-        public bool animationCompleted { get; private set; } = false;
-        public float timeBetweenFrames = .1f;
+        public Vector2 position;
+        public Texture2D Spritesheet { get; }
+        public bool Loop { get; }
+        public bool AnimationCompleted { get; private set; }
+        public float timeBetweenFrames;
 
-        private float frameWidth
-        {
-            get
-            {
-                return spritesheet.Width / totalFrames;
-            }
-        }
+        private float FrameWidth => Spritesheet.Width / totalFrames;
 
-        private float lastFrameRendered = 0f;
-        private int frame = 0;
-        private int totalFrames = 1;
+        private float lastFrameRendered;
+        private int frame;
+        private readonly int totalFrames;
 
         public AnimationTracker(Texture2D spritesheet, int totalFrames, Vector2 startingPosition, bool loop = true, float timeBetweenFrames = 0.05f)
         {
-            this.spritesheet = spritesheet;
+            this.Spritesheet = spritesheet;
             this.totalFrames = totalFrames;
-            this.loop = loop;
+            this.Loop = loop;
             this.timeBetweenFrames = timeBetweenFrames;
             position = startingPosition;
         }
@@ -35,36 +29,35 @@ namespace ScreensaverEngine
         public void Reset()
         {
             frame = 0;
-            animationCompleted = false;
+            AnimationCompleted = false;
         }
 
         public void Update(GameTime gameTime)
         {
-            if (animationCompleted) return;
+            if (AnimationCompleted) return;
 
-            if (lastFrameRendered + timeBetweenFrames <= gameTime.TotalGameTime.TotalSeconds)
+            if (!(lastFrameRendered + timeBetweenFrames <= gameTime.TotalGameTime.TotalSeconds)) return;
+
+            frame++;
+            if (frame > totalFrames - 1)
             {
-                frame++;
-                if (frame > totalFrames - 1)
+                if (Loop == false)
                 {
-                    if (loop == false)
-                    {
-                        animationCompleted = true;
-                        return;
-                    }
-
-                    frame = 0;
+                    AnimationCompleted = true;
+                    return;
                 }
 
-                lastFrameRendered = (float)gameTime.TotalGameTime.TotalSeconds;
+                frame = 0;
             }
+
+            lastFrameRendered = (float)gameTime.TotalGameTime.TotalSeconds;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(spritesheet,
-                new Rectangle((int)position.X, (int)position.Y, (int)frameWidth, spritesheet.Height),
-                new Rectangle((int)frameWidth * frame, 0, (int)frameWidth, spritesheet.Height),
+            spriteBatch.Draw(Spritesheet,
+                new Rectangle((int)position.X, (int)position.Y, (int)FrameWidth, Spritesheet.Height),
+                new Rectangle((int)FrameWidth * frame, 0, (int)FrameWidth, Spritesheet.Height),
                 Color.White);
         }
     }

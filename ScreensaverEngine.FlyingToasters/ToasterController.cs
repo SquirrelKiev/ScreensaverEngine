@@ -2,10 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System;
-using System.IO;
 using System.Reflection;
 using Microsoft.Xna.Framework.Audio;
-using System.Linq;
 
 namespace ScreensaverEngine.FlyingToasters
 {
@@ -131,7 +129,7 @@ namespace ScreensaverEngine.FlyingToasters
 
             foreach (AnimationTracker animator in explosionAnimators)
             {
-                if (animator.animationCompleted == false)
+                if (animator.AnimationCompleted == false)
                 {
                     animator.Draw(spriteBatch);
                 }

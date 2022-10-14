@@ -12,32 +12,28 @@ namespace ScreensaverEngine
         {
             var types = assembly.GetTypes();
             
-            Type[] filteredTypes = types.Where(t =>
-            {
-                return subclassesOnly ? t.IsSubclassOf(typeof(T)) : t.IsAssignableTo(typeof(T));
-            }
-            ).ToArray();
+            var filteredTypes = types.Where(t => subclassesOnly ? t.IsSubclassOf(typeof(T)) : t.IsAssignableTo(typeof(T))).ToArray();
 
             return filteredTypes;
         }
 
         internal static T[] GetInstancedTypesFromAssembly<T>(Assembly assembly, bool subclassesOnly)
         {
-            Type[] types = GetTypesFromAssembly<T>(assembly, false);
+            var types = GetTypesFromAssembly<T>(assembly, false);
 
             var instances = new List<T>();
 
-            for (int i = 0; i < types.Length; i++)
+            foreach (var type in types)
             {
                 try
                 {
-                    instances.Add((T)Activator.CreateInstance(types[i]));
+                    instances.Add((T)Activator.CreateInstance(type));
 
-                    Debug.Log($"Created instance of type {types[i]}");
+                    Debug.Log($"Created instance of type {type}");
                 }
                 catch
                 {
-                    Debug.Log($"Type {types[i]} is not instantiatable, skipping!");
+                    Debug.Log($"Type {type} is not instantiatable, skipping!");
                 }
             }
 
