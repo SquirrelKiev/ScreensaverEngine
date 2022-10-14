@@ -29,11 +29,9 @@ namespace ScreensaverEngine
     {
         public WindowWrapper(IntPtr handle)
         {
-            this.handle = handle;
+            Handle = handle;
         }
 
-        public IntPtr Handle => handle;
-
-        private readonly IntPtr handle;
+        public IntPtr Handle { get; }
     }
 }

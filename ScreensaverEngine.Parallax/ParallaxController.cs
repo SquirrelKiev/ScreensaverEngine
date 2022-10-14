@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -20,11 +19,11 @@ namespace ScreensaverEngine.Parallax
 
         public override void LoadContent(GraphicsDevice graphicsDevice)
         {
-            List<RuntimeLayer> layers = new List<RuntimeLayer>();
+            var tempLayers = new List<RuntimeLayer>();
 
             var selectedLayers = config.GetUserSelectedLayers();
 
-            foreach (Layer layer in selectedLayers)
+            foreach (var layer in selectedLayers)
             {
                 Texture2D texture;
 
@@ -38,10 +37,10 @@ namespace ScreensaverEngine.Parallax
                     texture = Texture2D.FromFile(graphicsDevice, layer.filePath);
                 }
 
-                layers.Add(new RuntimeLayer(layer, texture));
+                tempLayers.Add(new RuntimeLayer(layer, texture));
             }
 
-            this.layers = layers.ToArray();
+            layers = tempLayers.ToArray();
         }
 
         public override void Update(GameTime gameTime)
@@ -66,7 +65,7 @@ namespace ScreensaverEngine.Parallax
         {
             foreach (var layer in layers)
             {
-                int copies = (int)((Engine.BaseWidth - layer.currentPosition.X) / layer.Scale.X) + 1;
+                var copies = (int)((Engine.BaseWidth - layer.currentPosition.X) / layer.Scale.X) + 1;
 
                 //Debug.Log($"{layer.Layer.filePath}: {copies}");
 

@@ -14,7 +14,7 @@ namespace ScreensaverEngine
         internal static int Main(string[] args)
         {
             var config = ConfigUtility.LoadConfig<EngineConfig>();
-            var assemblies = ReflectionUtility.LoadAssembliesInDirectory(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Screensavers"));
+            var assemblies = ReflectionUtility.LoadAssembliesInDirectory(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!, "Screensavers"));
             var userSelectedAssembly = assemblies.FirstOrDefault(assembly => assembly.FullName == config.AssemblyToLoad);
             
             if (args.Length > 0)
@@ -45,18 +45,24 @@ namespace ScreensaverEngine
                 {
                     // Configuration mode
                     case "/c" when secondArgument == null:
+                    {
                         Debug.LogError("No window handle provided.");
 
                         return 2;
+                    }
                     case "/c":
+                    {
                         ConfigMode(assemblies, config, secondArgument);
 
                         return 0;
+                    }
                     // Preview mode
                     case "/p" when secondArgument == null:
+                    {
                         Debug.LogError("No window handle provided.");
 
                         return 2;
+                    }
                     case "/p":
                     {
                         var previewWndHandle = new IntPtr(long.Parse(secondArgument));
@@ -68,14 +74,18 @@ namespace ScreensaverEngine
                     }
                     // Screensaver mode
                     case "/s":
+                    {
                         ScreensaverMode(userSelectedAssembly, config);
 
                         return 0;
+                    }
                     // Undefined argument
                     default:
+                    {
                         Debug.LogError("Not a valid argument.");
 
                         return 3;
+                    }
                 }
             }
             else // Also config mode for some reason (thank you windows very cool)

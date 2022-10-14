@@ -9,11 +9,11 @@ namespace ScreensaverEngine.FlyingToasters
 {
     internal class ToasterController : Component
     {
-        ToasterConfig config;
+        private ToasterConfig config;
 
-        Assembly currentAssembly = Assembly.GetExecutingAssembly();
+        private readonly Assembly currentAssembly = Assembly.GetExecutingAssembly();
 
-        private static Random random = new Random();
+        private static readonly Random random = new();
 
         private const int toasterCollisionSize = 48;
         private Toast[] toasts;
@@ -25,7 +25,7 @@ namespace ScreensaverEngine.FlyingToasters
 
         public ToastType[] toastTypes;
 
-        private List<AnimationTracker> explosionAnimators = new List<AnimationTracker>();
+        private readonly List<AnimationTracker> explosionAnimators = new();
 
         public override void Initialize()
         {
@@ -39,15 +39,15 @@ namespace ScreensaverEngine.FlyingToasters
             explosionSound = SoundEffect.FromStream(currentAssembly.GetManifestResourceStream(
                 $"{ContentUtility.GetManifestContentDirectory(currentAssembly)}.snd_badexplosion.wav"));
 
-            List<ToastType> toastTypes = new List<ToastType>();
+            var tempToastTypes = new List<ToastType>();
 
-            AddToastConditionally(toastTypes, graphicsDevice, config.Toaster, "toaster.png", 6);
-            AddToastConditionally(toastTypes, graphicsDevice, config.LightlyToastedToast, "toastlight.gif", 1);
-            AddToastConditionally(toastTypes, graphicsDevice, config.WellToastedToast, "toastwell.gif", 1);
-            AddToastConditionally(toastTypes, graphicsDevice, config.VeryWellToastedToast, "toastverywell.gif", 1);
-            AddToastConditionally(toastTypes, graphicsDevice, config.BurntToast, "toastburnt.gif", 1);
+            AddToastConditionally(tempToastTypes, graphicsDevice, config.Toaster, "toaster.png", 6);
+            AddToastConditionally(tempToastTypes, graphicsDevice, config.LightlyToastedToast, "toastlight.gif", 1);
+            AddToastConditionally(tempToastTypes, graphicsDevice, config.WellToastedToast, "toastwell.gif", 1);
+            AddToastConditionally(tempToastTypes, graphicsDevice, config.VeryWellToastedToast, "toastverywell.gif", 1);
+            AddToastConditionally(tempToastTypes, graphicsDevice, config.BurntToast, "toastburnt.gif", 1);
 
-            this.toastTypes = toastTypes.ToArray();
+            this.toastTypes = tempToastTypes.ToArray();
 
             // should probably move out of load content
             toasts = new Toast[config.NumToasters];
@@ -70,49 +70,51 @@ namespace ScreensaverEngine.FlyingToasters
         {
             toastsToRemove.Clear();
 
-            for (int i = 0; i < toasts.Length; i++)
+            foreach (var toast in toasts)
             {
-                toasts[i].position.X -= toasts[i].speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                toasts[i].position.Y += toasts[i].speed * 0.5f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                toast.position.X -= toast.speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                toast.position.Y += toast.speed * 0.5f * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                if (toasts[i].position.X <= -64 || toasts[i].position.Y >= Engine.BaseHeight)
+                if (toast.position.X <= -64 || toast.position.Y >= Engine.BaseHeight)
                 {
-                    toastsToRemove.Add(toasts[i]);
+                    toastsToRemove.Add(toast);
                 }
 
                 // Not optimal but shouldn't be an issue
-                for (int x = 0; x < toasts.Length; x++)
+                foreach (var collidingToast in toasts)
                 {
-                    if (toasts[i] == toasts[x])
+                    if (toast == collidingToast)
                         continue;
 
-                    if (
-                        new Rectangle((int)toasts[x].position.X, (int)toasts[x].position.Y, toasterCollisionSize, toasterCollisionSize).Intersects
-                        (new Rectangle((int)toasts[i].position.X, (int)toasts[i].position.Y, toasterCollisionSize, toasterCollisionSize)))
-                    {
-                        if (!toastsToRemove.Contains(toasts[x]))
-                            toastsToRemove.Add(toasts[x]);
+                    var a = new Rectangle((int)collidingToast.position.X, (int)collidingToast.position.Y,
+                        toasterCollisionSize, toasterCollisionSize);
+                    var b = new Rectangle((int)toast.position.X, (int)toast.position.Y, toasterCollisionSize,
+                        toasterCollisionSize);
 
-                        if (!toastsToRemove.Contains(toasts[i]))
-                            toastsToRemove.Add(toasts[i]);
+                    if (!a.Intersects(b)) continue;
 
-                        explosionSound.Play(volume: .3f, pitch: 0.0f, pan: 0.0f);
-                        explosionAnimators.Add(new AnimationTracker(explosionTexture, 17, (toasts[i].position + toasts[x].position) / 2, false));
-                    }
+                    if (!toastsToRemove.Contains(collidingToast))
+                        toastsToRemove.Add(collidingToast);
+
+                    if (!toastsToRemove.Contains(toast))
+                        toastsToRemove.Add(toast);
+
+                    explosionSound.Play(volume: .3f, pitch: 0.0f, pan: 0.0f);
+                    explosionAnimators.Add(new AnimationTracker(explosionTexture, 17, (toast.position + collidingToast.position) / 2, false));
                 }
             }
 
-            foreach (Toast toaster in toastsToRemove)
+            foreach (var toaster in toastsToRemove)
             {
                 SpawnToaster(false, toaster);
             }
 
-            foreach (Toast toaster in toasts)
+            foreach (var toaster in toasts)
             {
                 toaster.Update(gameTime);
             }
 
-            foreach (AnimationTracker tracker in explosionAnimators)
+            foreach (var tracker in explosionAnimators)
             {
                 tracker.Update(gameTime);
             }
@@ -120,14 +122,14 @@ namespace ScreensaverEngine.FlyingToasters
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            foreach (Toast toaster in toasts)
+            foreach (var toaster in toasts)
             {
                 toaster.Draw(spriteBatch);
             }
 
             List<AnimationTracker> animatorsToRemove = null;
 
-            foreach (AnimationTracker animator in explosionAnimators)
+            foreach (var animator in explosionAnimators)
             {
                 if (animator.AnimationCompleted == false)
                 {
@@ -135,34 +137,32 @@ namespace ScreensaverEngine.FlyingToasters
                 }
                 else
                 {
-                    if (animatorsToRemove == null)
-                        animatorsToRemove = new List<AnimationTracker>();
+                    animatorsToRemove ??= new List<AnimationTracker>();
 
                     animatorsToRemove.Add(animator);
                 }
             }
 
-            if (animatorsToRemove != null)
+            if (animatorsToRemove == null) return;
+
+            foreach (var animator in animatorsToRemove)
             {
-                foreach (AnimationTracker animator in animatorsToRemove)
-                {
-                    explosionAnimators.Remove(animator);
-                }
+                explosionAnimators.Remove(animator);
             }
         }
 
         private void SpawnToaster(bool initToaster, Toast toaster)
         {
-            int toastX = 0;
-            int toastY = 0;
+            var toastX = 0;
+            var toastY = 0;
 
-            bool unsafeSpawn = true;
+            var unsafeSpawn = true;
 
             while (unsafeSpawn)
             {
                 unsafeSpawn = false;
 
-                double toastPosDecider = random.NextDouble() * 2;
+                var toastPosDecider = random.NextDouble() * 2;
 
                 if (initToaster)
                 {
@@ -180,9 +180,9 @@ namespace ScreensaverEngine.FlyingToasters
                     toastY = (int)(Engine.BaseHeight * (toastPosDecider - 1));
                 }
 
-                int spawnCheckSize = toasterCollisionSize * 2;
+                const int spawnCheckSize = toasterCollisionSize * 2;
 
-                foreach (Toast toast in toasts)
+                foreach (var toast in toasts)
                 {
                     if (toast != null &&
                         new Rectangle(toastX, toastY, spawnCheckSize, spawnCheckSize).Intersects

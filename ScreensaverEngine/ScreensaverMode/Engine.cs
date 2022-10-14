@@ -8,16 +8,16 @@ namespace ScreensaverEngine
     public class Engine : Game
     {
         #region Variables
-        public EngineConfig Config { get; private set; }
+        public EngineConfig Config { get; }
 
         public GameTime GameTime { get; private set; }
 
-        public GraphicsDeviceManager Graphics { get; private set; }
+        public GraphicsDeviceManager Graphics { get; }
         public Matrix ScreenMatrix { get; private set; }
         public Viewport Viewport { get; private set; }
 
-        public int BaseWidth { get; private set; } = 1280;
-        public int BaseHeight { get; private set; } = 720;
+        public const int BaseWidth = 1280;
+        public const int BaseHeight = 720;
         public int ViewWidth { get; private set; }
         public int ViewHeight { get; private set; }
 
@@ -50,12 +50,13 @@ namespace ScreensaverEngine
 
         protected override void Initialize()
         {
-            if (previewWndHandle.HasValue)
+            if (PreviewMode)
             {
                 var form = (System.Windows.Forms.Form)System.Windows.Forms.Control.FromHandle(Window.Handle);
 
                 form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 
+                // ReSharper disable once PossibleInvalidOperationException
                 NativeMethods.GetClientRect(previewWndHandle.Value, out var parentRect);
 
                 Graphics.PreferredBackBufferWidth = parentRect.Size.Width;
