@@ -16,7 +16,7 @@ namespace ScreensaverEngine
             var config = ConfigUtility.LoadConfig<EngineConfig>();
             var assemblies = ReflectionUtility.LoadAssembliesInDirectory(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!, "Screensavers"));
             var userSelectedAssembly = assemblies.FirstOrDefault(assembly => assembly.FullName == config.AssemblyToLoad);
-            
+
             if (args.Length > 0)
             {
                 string firstArgument = args[0].ToLower().Trim();
@@ -45,47 +45,47 @@ namespace ScreensaverEngine
                 {
                     // Configuration mode
                     case "/c" when secondArgument == null:
-                    {
-                        Debug.LogError("No window handle provided.");
+                        {
+                            Debug.LogError("No window handle provided.");
 
-                        return 2;
-                    }
+                            return 2;
+                        }
                     case "/c":
-                    {
-                        ConfigMode(assemblies, config, secondArgument);
+                        {
+                            ConfigMode(assemblies, config, secondArgument);
 
-                        return 0;
-                    }
+                            return 0;
+                        }
                     // Preview mode
                     case "/p" when secondArgument == null:
-                    {
-                        Debug.LogError("No window handle provided.");
+                        {
+                            Debug.LogError("No window handle provided.");
 
-                        return 2;
-                    }
+                            return 2;
+                        }
                     case "/p":
-                    {
-                        var previewWndHandle = new IntPtr(long.Parse(secondArgument));
+                        {
+                            var previewWndHandle = new IntPtr(long.Parse(secondArgument));
 
-                        using var engine = new Engine(userSelectedAssembly, config, previewWndHandle);
-                        engine.Run();
+                            using var engine = new Engine(userSelectedAssembly, config, previewWndHandle);
+                            engine.Run();
 
-                        return 0;
-                    }
+                            return 0;
+                        }
                     // Screensaver mode
                     case "/s":
-                    {
-                        ScreensaverMode(userSelectedAssembly, config);
+                        {
+                            ScreensaverMode(userSelectedAssembly, config);
 
-                        return 0;
-                    }
+                            return 0;
+                        }
                     // Undefined argument
                     default:
-                    {
-                        Debug.LogError("Not a valid argument.");
+                        {
+                            Debug.LogError("Not a valid argument.");
 
-                        return 3;
-                    }
+                            return 3;
+                        }
                 }
             }
             else // Also config mode for some reason (thank you windows very cool)
@@ -112,7 +112,7 @@ namespace ScreensaverEngine
 
             var screensaverConfig = new ConfigForm(assemblies, config);
 
-            if(configWndHandle != null)
+            if (configWndHandle != null)
             {
                 screensaverConfig.ShowDialog(new WindowWrapper(configWndHandle.Value));
             }

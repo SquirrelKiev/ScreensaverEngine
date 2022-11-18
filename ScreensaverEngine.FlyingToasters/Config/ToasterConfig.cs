@@ -19,6 +19,9 @@ namespace ScreensaverEngine.FlyingToasters
         public bool Toaster { get; internal set; } = true;
 
         [JsonProperty]
+        public float Volume { get; internal set; } = 0.1f;
+
+        [JsonProperty]
         public int MaxSpeed { get; internal set; } = 200;
         [JsonProperty]
         public int MinSpeed { get; internal set; } = 90;

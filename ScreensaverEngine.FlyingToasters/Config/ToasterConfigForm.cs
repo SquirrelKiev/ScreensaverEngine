@@ -22,7 +22,7 @@ namespace ScreensaverEngine.FlyingToasters
 
         private bool SaveToasterConfig()
         {
-            config.NumToasters = (int)NumToasters.Value;
+            config.NumToasters = (int)numToasters.Value;
 
             config.LightlyToastedToast = LTTCheckbox.Checked;
             config.WellToastedToast = WTTCheckbox.Checked;
@@ -30,8 +30,10 @@ namespace ScreensaverEngine.FlyingToasters
             config.BurntToast = BTCheckbox.Checked;
             config.Toaster = FTCheckbox.Checked;
 
-            config.MinSpeed = (int)MinimumSpeed.Value;
-            config.MaxSpeed = (int)MaximumSpeed.Value;
+            config.MinSpeed = (int)minimumSpeed.Value;
+            config.MaxSpeed = (int)maximumSpeed.Value;
+
+            config.Volume = (float)volumeSlider.Value / volumeSlider.Maximum;
 
             if (config.MinSpeed > config.MaxSpeed)
             {
@@ -48,7 +50,7 @@ namespace ScreensaverEngine.FlyingToasters
         {
             config = ConfigUtility.LoadConfig<ToasterConfig>();
 
-            NumToasters.Value = config.NumToasters;
+            numToasters.Value = config.NumToasters;
 
             LTTCheckbox.Checked = config.LightlyToastedToast;
             WTTCheckbox.Checked = config.WellToastedToast;
@@ -56,8 +58,10 @@ namespace ScreensaverEngine.FlyingToasters
             BTCheckbox.Checked = config.BurntToast;
             FTCheckbox.Checked = config.Toaster;
 
-            MinimumSpeed.Value = config.MinSpeed;
-            MaximumSpeed.Value = config.MaxSpeed;
+            minimumSpeed.Value = config.MinSpeed;
+            maximumSpeed.Value = config.MaxSpeed;
+            
+            volumeSlider.Value = (int)(config.Volume * volumeSlider.Maximum);
         }
     }
 }

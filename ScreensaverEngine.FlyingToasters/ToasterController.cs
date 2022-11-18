@@ -99,7 +99,7 @@ namespace ScreensaverEngine.FlyingToasters
                     if (!toastsToRemove.Contains(toast))
                         toastsToRemove.Add(toast);
 
-                    explosionSound.Play(volume: .3f, pitch: 0.0f, pan: 0.0f);
+                    explosionSound.Play(volume: config.Volume, pitch: 0.0f, pan: 0.0f);
                     explosionAnimators.Add(new AnimationTracker(explosionTexture, 17, (toast.position + collidingToast.position) / 2, false));
                 }
             }
